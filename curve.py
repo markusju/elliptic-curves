@@ -1,7 +1,5 @@
-from fractions import Fraction
-
 """
-This is a very basic implementation of elliptic curves.
+This is a very basic implementation of elliptic curves in Python.
 It allows to define a Curve(a, b, p) with E: y^2 = x^3 + a*x + b mod p
 The point class allows to operate on this curve and implements addition and multiplication.
 
@@ -28,19 +26,41 @@ class Curve:
         self.b = b
         self.p = p
 
+    def get_points(self):
+        list = []
+        for x in range(0, self.p):
+            y2 = (pow(x, 3) + self.a*x + self.b) % self.p
+            y = pow(y2, 0.5)
+            if not y.is_integer() or y2 == 0:
+                continue
+            y = int(y)
+            list.append(Point(x, y%self.p, self))
+            if not list[-1].is_infinity():
+                list.append(Point(x, -y%self.p, self))
+        #list.append(Point(0,0,self))
+        return list
+
 
 class Point:
     def __init__(self, x, y, curve):
-        self.x = x
-        self.y = y
+        self.x = x % curve.p
+        self.y = y % curve.p
         self.curve = curve
 
     @staticmethod
-    def fractionmodp(fraction, p):
-        return (fraction.numerator * pow(fraction.denominator, p-2, p)) % p
+    def invert(x, p):
+        return pow(x, p-2, p)
+
+    def is_infinity(self):
+        return self.x <= 0 or self.y <= 0
+
+    def __repr__(self):
+        return ""+self.__str__()
 
     def __str__(self):
-        return "("+str(self.x)+", "+str(self.y)+")";
+        if self.is_infinity():
+            return "(0)"
+        return "("+str(self.x)+", "+str(self.y)+")"
 
     def __eq__(self, other):
         if isinstance(other, Point):
@@ -50,9 +70,9 @@ class Point:
     def __mul__(self, other):
         if not isinstance(other, int):
             raise TypeError("unsup")
-        spoint = self
+        spoint = Point(0, 0, self.curve)
         for i in range(1, other+1):
-            spoint +=spoint
+            spoint += self
         return spoint
 
     def __rmul__(self, other):
@@ -66,13 +86,24 @@ class Point:
         p2 = other
         curve = self.curve
 
+        #p1 is zero
+        if p1.is_infinity():
+            return p2
+        #p2 is zero
+        if p2.is_infinity():
+            return p1
+
+        # P1=-P2
+        if p1.x == p2.x and p1.y == -p2.y % curve.p:
+            return Point(0, 0, curve)
+
         #Slope m of g(x) = m*x + d
         if p1 == p2:
-            m = Fraction((3*pow(p1.x,2)+curve.a),2*p1.y)
+            m = (3*p1.x*p1.x+curve.a) * Point.invert(2*p1.y, curve.p)
         else:
-            m = Fraction((p2.y-p1.y), (p2.x-p1.x))
+            m = (p2.y-p1.y) * Point.invert(p2.x-p1.x, curve.p)
 
-        m = Point.fractionmodp(m, curve.p)
+        m = m % curve.p
         d = (p1.y - m+p1.x) % curve.p
 
 
@@ -82,12 +113,11 @@ class Point:
 
         return Point(x3, y3, curve)
 
-curve1 = Curve(1, 1, 5)
-p1 = Point(2, 1, curve1)
-p2 = Point(4, 2, curve1)
+curve1 = Curve(1, 1, 13)
+p1 = Point(4, 2, curve1)
+p2 = 9*p1
 
-p3 = p1+p2
-p4 = 4*p1
 
-print(p3)
-print(p4)
+
+
+
