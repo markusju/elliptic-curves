@@ -54,6 +54,14 @@ class Point:
     def is_infinity(self):
         return self.x <= 0 or self.y <= 0
 
+    def get_order(self):
+        res = Point(1, 1, self.curve)
+        order = 1
+        while not res.is_infinity():
+            res = order*self
+            order += 1
+        return order
+
     def __repr__(self):
         return ""+self.__str__()
 
