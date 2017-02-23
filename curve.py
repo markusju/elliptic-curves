@@ -113,11 +113,3 @@ class Point:
 
         return Point(x3, y3, curve)
 
-curve1 = Curve(1, 1, 13)
-p1 = Point(4, 2, curve1)
-p2 = 9*p1
-
-
-
-
-
