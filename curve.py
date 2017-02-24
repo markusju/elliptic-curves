@@ -7,8 +7,13 @@ A Curve may be defined as follows:
 
 curve = Curve(1, 1, 5)
 
+Points on the curve are initialized with a reference to a Curve object
+
 p1 = Point(2, 1, curve)
 p2 = Point(4, 3, curve)
+
+The multiplication and addition operators for Points have been implemented, allowing to easily peform addition and scalar-multiplication:
+
 
 p3 = p1+p2
 p4 = 2*p1
