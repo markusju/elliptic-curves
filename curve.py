@@ -59,6 +59,9 @@ class Point:
     def is_infinity(self):
         return self.x <= 0 or self.y <= 0
 
+    def get_negative(self):
+        return Point(self.x, -self.y%self.curve.p, self.curve)
+
     def get_order(self):
         res = Point(1, 1, self.curve)
         order = 1
