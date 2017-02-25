@@ -57,7 +57,7 @@ class Point:
         return pow(x, p-2, p)
 
     def is_infinity(self):
-        return self.x <= 0 or self.y <= 0
+        return self.x <= 0 and self.y <= 0
 
     def get_negative(self):
         return Point(self.x, -self.y%self.curve.p, self.curve)
@@ -128,4 +128,3 @@ class Point:
         y3 = (m*(p1.x-x3)-p1.y) % curve.p
 
         return Point(x3, y3, curve)
-
