@@ -24,6 +24,10 @@ print(p4)
 
 """
 
+def root_of_x_mod_p(x, p):
+    pass
+
+
 class Curve:
     # y^2 = x^3 + a*x +b
     def __init__(self, a, b, p):
@@ -54,6 +58,7 @@ class Point:
 
     @staticmethod
     def invert(x, p):
+        # Fermat
         return pow(x, p-2, p)
 
     def is_infinity(self):
@@ -93,6 +98,12 @@ class Point:
 
     def __rmul__(self, other):
         return self.__mul__(other)
+
+    def __sub__(self, other):
+        if not isinstance(other, Point):
+            raise TypeError("unsup")
+
+        return self + other.get_negative()
 
     def __add__(self, other):
         if not isinstance(other, Point):

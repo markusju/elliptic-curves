@@ -1,15 +1,15 @@
 from curve import Curve, Point
 
 #ECDH - Elliptic Curve Diffie Hellman
-curve1 = Curve(65, -65, 3077783)
-G = Point(1, 1, curve1)
+curve1 = Curve(-1, 3, 7)
+G = Point(2, 4, curve1)
 
 #Alice
-a = 43
+a = 5
 kxa = a*G
 
 #Bob
-b = 12
+b = 2
 kxb = b*G
 
 # Key computation for Alice

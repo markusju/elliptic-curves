@@ -43,6 +43,6 @@ C = recv_message[0]
 D = recv_message[1]
 
 # M = a*C - D
-M_dec = a*C.get_negative() + D
+M_dec = D - a*C
 
 print(M_dec)
