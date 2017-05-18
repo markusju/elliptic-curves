@@ -36,6 +36,7 @@ class Curve:
         self.p = p
 
     def get_points(self):
+        #Broken! :)
         list = []
         for x in range(0, self.p):
             y2 = (pow(x, 3) + self.a*x + self.b) % self.p
