@@ -12,15 +12,17 @@ Points on the curve are initialized with a reference to a Curve object
 p1 = Point(2, 1, curve)
 p2 = Point(4, 3, curve)
 
-The multiplication and addition operators for Points have been implemented, allowing to easily peform addition and scalar-multiplication:
+The multiplication, addition and subtraction operators for Points have been overloaded, allowing to easily peform addition, subtraction and scalar-multiplication:
 
 
 p3 = p1+p2
 p4 = 2*p1
+p5 = p1-p2
+
 
 print(p3)
 print(p4)
-
+print(p5)
 
 """
 
