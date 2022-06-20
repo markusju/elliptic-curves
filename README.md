@@ -12,3 +12,5 @@ We provide several examples to demonstrate our implementation:
 * ECDH (Diffie-Hellman)
 * ECDSA (DSA)
 * EC-Elgamal
+
+Please note that this implementation is intended solely for educational purposes.
